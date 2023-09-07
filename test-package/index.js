@@ -109,7 +109,7 @@ function install () {
 function extractTarPackage () {
   console.log('--- extract ---');
 
-  const tarGlob = 'localnerve-sass-asset-functions*';
+  const tarGlob = 'localnerve-hmac-symmetric*';
   const tarFileName = globSync(tarGlob)[0];
 
   // clean any existing local node_modules
