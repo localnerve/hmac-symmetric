@@ -1,0 +1,6 @@
+__tests__
+test-package
+.github
+coverage
+tmp
+*.tgz
