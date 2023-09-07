@@ -9,6 +9,8 @@
 ## Summary
 A zero dependency node library with basic functions for using symmetric encryption with HMAC digests. A a simple, small, configurable, and reusable set of functions for payload integrity and authentication.  
 
+TLDR; Skip to the [example](#example)...
+
 ## Applications
 This is a general purpose library that can be used in any application where an HMAC'd symmetrically encrypted payload is useful. Here's a quick reminder of a couple of useful applications for this library:
 1. Bot Mitigation  
@@ -22,7 +24,12 @@ This library uses the environment variables
   + `HS_ENCRYPTION_KEY`
 
 As the default source for keys for cryptographic functions.  
-Overridable in the options.
+For more information see:  
+  1. For HMAC secret [key](https://nodejs.org/api/crypto.html#cryptocreatehmacalgorithm-key-options)
+  2. For Encryption/Decryption [key](https://nodejs.org/api/crypto.html#cryptocreatecipherivalgorithm-key-iv-options)
+  3. And [caveats for using strings as inputs for cryptographic APIs](https://nodejs.org/api/crypto.html#using-strings-as-inputs-to-cryptographic-apis)
+
+To **NOT** use environment variables, supply options `hmacSecret` and `encryptionKey`.
 
 Methods this library exports:
 
@@ -71,6 +78,64 @@ Symmetrically decrypt an encrypted input using an encryption key.
   * {Boolean} [options.outputBuffer] - true to return the Buffer result, false to convert buffer to string. Defaults to false.
   * Returns {String|Buffer} for the decrypted data as requested.
 
+### HSError
+The class used by this library to throw errors.  
+Useful for determining hmac-symmetric specific error source.  
+`class HSError, constructor (hsErrorType, originalError)`
+
+#### HSError.HSE_HMAC
+Error property `hseType` will be equal to `HSError.HSE_HMAC` if error occurred during HMAC generation.
+
+#### HSError.HSE_ENCRYPT
+Error property `hseType` will be equal to `HSError.HSE_ENCRYPT` if error occurred during encryption.
+
+#### HSError.HSE_DECRYPT
+Error property `hseType` will be equal to `HSError.HSE_DECRYPT` if error occurred during decryption.
+
+## Example
+
+Encryption/decryption usage with top level helper API using `hmacSecret` and `encryptionKey` (instead of using environment variables `HS_HMAC_SECRET` and `HS_ENCRYPTION_KEY`).
+
+```javascript
+import crypto from 'node:crypto';
+import { HSError, encryptAndDigest, decryptAndTest } from '@localnerve/hmac-symmetric';
+
+// Create demo input and phony keys for demo only.
+const input = 'hello world';
+const hmacSecret = crypto.randomBytes(32);
+const encryptionKey = crypto.randomBytes(32);  
+console.log(input);
+  // hello world
+
+try {
+  const encrypted = encryptAndDigest(input, {
+    hmacSecret,
+    encryptionKey
+  });
+  console.log(encrypted);
+    // {
+    //   digest: 'd3d6a6f1b2723f001c8c4ff4b28d0b310899c5eefbdbece184d62fcd8a4d712e',
+    //   payload: '1f59ccab850189d7906db63f7f087d0f:957c9fe80c93033a8f9a9de0c0d73729'
+    // }
+
+  const decrypted = decryptAndTest(encrypted.digest, encrypted.payload, {
+    hmacSecret,
+    encryptionKey
+  });
+  console.log(decrypted);
+    // { 
+    //   ok: true,
+    //   decrypted: 'hello world'
+    // }
+
+} catch (e) {
+  console.log(e.hseType);
+    // HSE_HMAC, HSE_ENCRYPT, or HSE_DECRYPT
+  console.log('hmac error', e.hseType === HSError.HSE_HMAC);
+  console.log('encryption error', e.hseType === HSError.HSE_ENCRYPT);
+  console.log('decryption error', e.hseType === HSError.HSE_DECRYPT);
+}
+```
 ## LICENSE
 
 * [BSD 3-Clause, Alex Grant, LocalNerve, LLC](LICENSE.md)
