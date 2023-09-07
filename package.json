@@ -1,6 +1,6 @@
 {
   "name": "@localnerve/hmac-symmetric",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A library to generate hmac and symmetrically encrypted payloads",
   "main": "index.js",
   "type": "module",
