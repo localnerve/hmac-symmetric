@@ -84,13 +84,13 @@ function pack () {
 }
 
 /**
- * Run `npm i`
+ * Run `npm i --production=true`
  * @returns Promise that resolves on success, rejects with msg on error
  */
 function install () {
   console.log('--- install ---');
   return new Promise((resolve, reject) => {
-    const install = spawn('npm', ['i'], {
+    const install = spawn('npm', ['i', '--production=true'], {
       cwd: `${localNodeModulesPath}/package`
     });
     install.on('close', installCode => {
