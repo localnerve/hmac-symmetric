@@ -8,7 +8,6 @@
  * Copyright (c) 2023-2024 Alex Grant (@localnerve), LocalNerve LLC
  * Copyrights licensed under the BSD License. See the accompanying LICENSE file for terms.
  */
-/* eslint-env jest */
 import { HSError } from '../lib/errors.js';
 import { generateHmac, symmetricEncrypt, symmetricDecrypt } from '../lib/utils.js';
 
@@ -29,6 +28,7 @@ describe('generateHmac', () => {
     }).toThrow(HSError)
   });
 
+  /* eslint-disable jest/no-conditional-expect */
   test('bad algo, error type', () => {
     try {
       generateHmac(input, {
@@ -39,6 +39,7 @@ describe('generateHmac', () => {
       expect(e.hseType).toEqual(HSError.HSE_HMAC);
     }
   });
+  /* eslint-enable jest/no-conditional-expect */
 });
 
 describe('symmetricEncrypt', () => {
@@ -56,6 +57,7 @@ describe('symmetricEncrypt', () => {
     }).toThrow(HSError);
   });
 
+  /* eslint-disable jest/no-conditional-expect */
   test('bad algo, error type', () => {
     try {
       symmetricEncrypt(input, {
@@ -66,6 +68,7 @@ describe('symmetricEncrypt', () => {
       expect(e.hseType).toEqual(HSError.HSE_ENCRYPT);
     }
   });
+  /* eslint-enable jest/no-conditional-expect */
 });
 
 describe('symmetricDecrypt', () => {
@@ -84,6 +87,7 @@ describe('symmetricDecrypt', () => {
     }).toThrow(HSError);
   });
 
+  /* eslint-disable jest/no-conditional-expect */
   test('bad algo, error type', () => {
     try {
       symmetricDecrypt('one:two', {
@@ -94,4 +98,5 @@ describe('symmetricDecrypt', () => {
       expect(e.hseType).toEqual(HSError.HSE_DECRYPT);
     }
   });
+  /* eslint-enable jest/no-conditional-expect */
 });

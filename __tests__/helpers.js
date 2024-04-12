@@ -8,7 +8,6 @@
  * Copyright (c) 2023-2024 Alex Grant (@localnerve), LocalNerve LLC
  * Copyrights licensed under the BSD License. See the accompanying LICENSE file for terms.
  */
-/* eslint-env jest */
 import { encryptAndDigest, decryptAndTest } from '../lib/helpers.js';
 
 const input = 'hello world';
