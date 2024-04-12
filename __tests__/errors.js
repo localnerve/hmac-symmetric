@@ -4,7 +4,6 @@
  * Copyright (c) 2023-2024 Alex Grant (@localnerve), LocalNerve LLC
  * Copyrights licensed under the BSD License. See the accompanying LICENSE file for terms.
  */
-/* eslint-env jest */
 import { HSError } from '../lib/errors.js';
 
 describe('HSError', () => {
@@ -16,6 +15,6 @@ describe('HSError', () => {
 
     expect(err.hseType === HSError.HSE_HMAC).toBeTruthy();
     expect(err.message === message).toBeTruthy();
-    expect(err.name === 'HSError');
+    expect(err.name === 'HSError').toBeTruthy();
   });
 });
