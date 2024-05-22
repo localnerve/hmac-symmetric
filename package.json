@@ -1,6 +1,6 @@
 {
   "name": "@localnerve/hmac-symmetric",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A library to generate hmac and symmetrically encrypted payloads",
   "main": "index.js",
   "type": "module",
@@ -44,17 +44,17 @@
   },
   "homepage": "https://github.com/localnerve/hmac-symmetric#readme",
   "devDependencies": {
-    "@babel/cli": "^7.24.1",
-    "@babel/preset-env": "^7.24.4",
-    "@eslint/js": "^9.0.0",
+    "@babel/cli": "^7.24.5",
+    "@babel/preset-env": "^7.24.5",
+    "@eslint/js": "^9.3.0",
     "cross-env": "^7.0.3",
-    "eslint": "^9.0.0",
-    "eslint-plugin-jest": "^28.2.0",
-    "glob": "^10.3.12",
-    "globals": "^15.0.0",
+    "eslint": "^9.3.0",
+    "eslint-plugin-jest": "^28.5.0",
+    "glob": "^10.3.16",
+    "globals": "^15.3.0",
     "jest": "^29.7.0",
-    "rimraf": "^5.0.5",
-    "tar": "^7.0.0"
+    "rimraf": "^5.0.7",
+    "tar": "^7.1.0"
   },
   "engines": {
     "node": ">= 18"
