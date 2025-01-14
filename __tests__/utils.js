@@ -5,7 +5,7 @@
  *   process.env.HS_ENCRYPTION_KEY
  *   process.env.HS_HMAC_SECRET
  *
- * Copyright (c) 2023-2024 Alex Grant (@localnerve), LocalNerve LLC
+ * Copyright (c) 2023-2025 Alex Grant (@localnerve), LocalNerve LLC
  * Copyrights licensed under the BSD License. See the accompanying LICENSE file for terms.
  */
 import { HSError } from '../lib/errors.js';
