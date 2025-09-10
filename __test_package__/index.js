@@ -36,7 +36,7 @@ function runTests () {
       console.error(msg);
       errors.push(msg);
     } else {
-      console.log(`${testFileShort} success`);
+      console.log(`${testFileShort} OK`);
     }
     console.log(`=== end ${testFileShort} ===`);
   });
