@@ -8,6 +8,8 @@
  * Copyright (c) 2023-2025 Alex Grant (@localnerve), LocalNerve LLC
  * Copyrights licensed under the BSD License. See the accompanying LICENSE file for terms.
  */
+import { describe, test } from 'node:test';
+import assert from 'node:assert';
 import { encryptAndDigest, decryptAndTest } from '../lib/helpers.js';
 
 const input = 'hello world';
@@ -15,13 +17,13 @@ const input = 'hello world';
 describe('full basic test', () => {
   test('basic functionality', () => {
     const enc = encryptAndDigest(input);
-    expect(enc).toHaveProperty('digest');
-    expect(enc).toHaveProperty('payload');
+    assert.ok('digest' in enc);
+    assert.ok('payload' in enc);
 
     const result = decryptAndTest(enc.digest, enc.payload);
-    expect(result).toHaveProperty('ok');
-    expect(result).toHaveProperty('decrypted');
-    expect(result.ok).toStrictEqual(true);
-    expect(result.decrypted).toEqual(input);
+    assert.ok('ok' in result);
+    assert.ok( 'decrypted' in result);
+    assert.strictEqual(result.ok, true);
+    assert.strictEqual(result.decrypted, input);
   });
 });

@@ -1,6 +1,8 @@
 import js from '@eslint/js';
 import globals from 'globals';
-import jest from 'eslint-plugin-jest';
+import nodePlugin from 'eslint-plugin-n';
+
+const nodeRules = nodePlugin.configs['flat/recommended'].rules;
 
 export default [{
   ignores: [
@@ -10,17 +12,22 @@ export default [{
     '**/tmp/**'
   ]
 }, {
+  plugins: { n: nodePlugin },
   files: [
     'lib/**',
     '__test_package__/*.mjs'
   ],
-  ...js.configs.recommended,
   languageOptions: {
     globals: {
       ...globals.node
     }
+  },
+  rules: {
+    ...js.configs.recommended.rules,
+    ...nodeRules
   }
 }, {
+  plugins: { n: nodePlugin },
   files: [
     '__test_package__/*.{js,cjs}'
   ],
@@ -30,10 +37,23 @@ export default [{
     globals: {
       ...globals.node
     }
+  },
+  rules: {
+    ...js.configs.recommended.rules,
+    ...nodeRules
   }
 }, {
+  plugins: { n: nodePlugin },
   files: [
     '__tests__/**'
   ],
-  ...jest.configs['flat/recommended']
+  languageOptions: {
+    globals: {
+      ...globals.node
+    }
+  },
+  rules: {
+    ...js.configs.recommended.rules,
+    ...nodeRules
+  }
 }]

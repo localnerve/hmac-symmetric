@@ -4,6 +4,8 @@
  * Copyright (c) 2023-2025 Alex Grant (@localnerve), LocalNerve LLC
  * Copyrights licensed under the BSD License. See the accompanying LICENSE file for terms.
  */
+import { describe, test } from 'node:test';
+import assert from 'node:assert';
 import {
   HSError,
   generateHmac,
@@ -17,21 +19,21 @@ import { HSError as HSErrorClass } from '../lib/errors.js';
 describe('API', () => {
 
     test('errors', () => {
-      expect(new HSError('err', new Error())).toBeInstanceOf(HSErrorClass);
-      expect(HSError.HSE_HMAC).toBeTruthy();
-      expect(HSError.HSE_ENCRYPT).toBeTruthy();
-      expect(HSError.HSE_DECRYPT).toBeTruthy();
+      assert.ok(new HSError('err', new Error()) instanceof HSErrorClass);
+      assert.ok(HSError.HSE_HMAC);
+      assert.ok(HSError.HSE_ENCRYPT);
+      assert.ok(HSError.HSE_DECRYPT);
     });
 
     test('utils', () => {
-      expect(typeof generateHmac === 'function').toBeTruthy();
-      expect(typeof symmetricEncrypt === 'function').toBeTruthy();
-      expect(typeof symmetricDecrypt === 'function').toBeTruthy();
+      assert.ok(typeof generateHmac === 'function');
+      assert.ok(typeof symmetricEncrypt === 'function');
+      assert.ok(typeof symmetricDecrypt === 'function');
     });
 
     test('helpers', () => {
-      expect(typeof encryptAndDigest === 'function').toBeTruthy();
-      expect(typeof decryptAndTest === 'function').toBeTruthy();
+      assert.ok(typeof encryptAndDigest === 'function');
+      assert.ok(typeof decryptAndTest === 'function');
     });
 
 });
