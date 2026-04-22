@@ -8,6 +8,8 @@
  * Copyright (c) 2023-2025 Alex Grant (@localnerve), LocalNerve LLC
  * Copyrights licensed under the BSD License. See the accompanying LICENSE file for terms.
  */
+import { describe, test } from 'node:test';
+import assert from 'node:assert';
 import { HSError } from '../lib/errors.js';
 import { generateHmac, symmetricEncrypt, symmetricDecrypt } from '../lib/utils.js';
 
@@ -17,18 +19,17 @@ describe('generateHmac', () => {
   test('basic equality', () => {    
     const first = generateHmac(input);
     const second = generateHmac(input);
-    expect(first).toEqual(second);
+    assert.strictEqual(first, second);
   });
 
   test('bad secret, environment override, HSError instance', () => {
-    expect(() => {
+    assert.throws(() => {
       generateHmac(input, {
         hmacSecret: {}
       });
-    }).toThrow(HSError)
+    }, HSError);
   });
 
-  /* eslint-disable jest/no-conditional-expect */
   test('bad algo, error type', () => {
     try {
       generateHmac(input, {
@@ -36,28 +37,26 @@ describe('generateHmac', () => {
       });
       throw new Error('This should not have run');
     } catch (e) {
-      expect(e.hseType).toEqual(HSError.HSE_HMAC);
+      assert.strictEqual(e.hseType, HSError.HSE_HMAC);
     }
   });
-  /* eslint-enable jest/no-conditional-expect */
 });
 
 describe('symmetricEncrypt', () => {
   test('basic encyption', () => {
     const encrypted = symmetricEncrypt(input);
     const decrypted = symmetricDecrypt(encrypted);
-    expect(decrypted).toEqual(input);
+    assert.strictEqual(decrypted, input);
   });
 
   test('bad key, environment override, HSError instance', () => {
-    expect(() => {
+    assert.throws(() => {
       symmetricEncrypt(input, {
         encryptionKey: {}
       });
-    }).toThrow(HSError);
+    }, HSError);
   });
 
-  /* eslint-disable jest/no-conditional-expect */
   test('bad algo, error type', () => {
     try {
       symmetricEncrypt(input, {
@@ -65,29 +64,27 @@ describe('symmetricEncrypt', () => {
       });
       throw new Error('this should not have run');
     } catch (e) {
-      expect(e.hseType).toEqual(HSError.HSE_ENCRYPT);
+      assert.strictEqual(e.hseType, HSError.HSE_ENCRYPT);
     }
   });
-  /* eslint-enable jest/no-conditional-expect */
 });
 
 describe('symmetricDecrypt', () => {
   test('decrypt to buffer', () => {
     const encrypted = symmetricEncrypt(input);
     const decrypted = symmetricDecrypt(encrypted, { outputBuffer: true });
-    expect(decrypted).toBeInstanceOf(Buffer);
-    expect(decrypted.toString()).toEqual(input);
+    assert.ok(decrypted instanceof Buffer);
+    assert.strictEqual(decrypted.toString(), input);
   });
 
   test('bad key, environment override, HSError instance', () => {
-    expect(() => {
+    assert.throws(() => {
       symmetricDecrypt('one:two', {
         encryptionKey: {}
       });
-    }).toThrow(HSError);
+    }, HSError);
   });
 
-  /* eslint-disable jest/no-conditional-expect */
   test('bad algo, error type', () => {
     try {
       symmetricDecrypt('one:two', {
@@ -95,8 +92,7 @@ describe('symmetricDecrypt', () => {
       });
       throw new Error('this should not have run');
     } catch (e) {
-      expect(e.hseType).toEqual(HSError.HSE_DECRYPT);
+      assert.strictEqual(e.hseType, HSError.HSE_DECRYPT);
     }
   });
-  /* eslint-enable jest/no-conditional-expect */
 });

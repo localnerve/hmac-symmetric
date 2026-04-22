@@ -4,3 +4,5 @@ __test_package__
 coverage
 tmp
 *.tgz
+posttranspile.js
+babel.config.json

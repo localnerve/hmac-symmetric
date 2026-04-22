@@ -4,6 +4,8 @@
  * Copyright (c) 2023-2025 Alex Grant (@localnerve), LocalNerve LLC
  * Copyrights licensed under the BSD License. See the accompanying LICENSE file for terms.
  */
+import { describe, test } from 'node:test';
+import assert from 'node:assert';
 import { HSError } from '../lib/errors.js';
 
 describe('HSError', () => {
@@ -13,8 +15,8 @@ describe('HSError', () => {
     const originalError = new Error(message)
     const err = new HSError(HSError.HSE_HMAC, originalError);
 
-    expect(err.hseType === HSError.HSE_HMAC).toBeTruthy();
-    expect(err.message === message).toBeTruthy();
-    expect(err.name === 'HSError').toBeTruthy();
+    assert.ok(err.hseType === HSError.HSE_HMAC);
+    assert.ok(err.message === message);
+    assert.ok(err.name === 'HSError');
   });
 });

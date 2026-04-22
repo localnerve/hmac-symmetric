@@ -14,7 +14,7 @@ function testEncryptAndDigest(encryptAndDigest) {
     hmacSecret,
     encryptionKey
   });
-  assert.ok(result, "nothing returned from package");
+  assert.ok(result, 'nothing returned from package');
   assert.ok(result.digest.length > 0, 'no digest returned from package');
   assert.ok(result.payload.length > 0, 'no payload returned from package');
 }

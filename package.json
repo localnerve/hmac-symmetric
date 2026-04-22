@@ -1,8 +1,7 @@
 {
   "name": "@localnerve/hmac-symmetric",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "A library to generate hmac and symmetrically encrypted payloads",
-  "main": "index.js",
   "type": "module",
   "exports": {
     "require": "./cjs/index.cjs",
@@ -14,11 +13,14 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "pretranspile": "rimraf ./cjs",
+    "pretranspile": "node -e 'require(\"fs\").rmSync(\"./cjs\", {recursive:true,force:true})'",
     "transpile": "babel lib -d cjs --out-file-extension .cjs",
     "posttranspile": "node posttranspile.js",
-    "test": "cross-env HS_HMAC_SECRET=deadbeef HS_ENCRYPTION_KEY=56c6a9c6fb56a39e05fb993918ab01dda24439e2658dd7b06aa0f8fcc7fe0627 jest && npm run test-package",
-    "test-package": "node ./__test_package__/index.js"
+    "prepublishOnly": "npm run transpile",
+    "pretest:node": "node -e 'require(\"fs\"); fs.rmSync(\"./coverage\", {recursive:true,force:true}); fs.mkdirSync(\"./coverage\", {recursive:true});'",
+    "test:node": "node --test --experimental-test-coverage --test-coverage-lines=95 --test-coverage-exclude='__tests__/**' --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=coverage/lcov.info ./__tests__/*.js",
+    "test": "cross-env HS_HMAC_SECRET=deadbeef HS_ENCRYPTION_KEY=56c6a9c6fb56a39e05fb993918ab01dda24439e2658dd7b06aa0f8fcc7fe0627 npm run test:node && npm run test:package",
+    "test:package": "node ./__test_package__/index.js"
   },
   "repository": {
     "type": "git",
@@ -43,20 +45,18 @@
     "url": "https://github.com/localnerve/hmac-symmetric/issues"
   },
   "homepage": "https://github.com/localnerve/hmac-symmetric#readme",
+  "dependencies": {},
   "devDependencies": {
-    "@babel/cli": "^7.28.3",
-    "@babel/preset-env": "^7.28.5",
-    "@eslint/js": "^9.39.1",
+    "@babel/cli": "^7.28.6",
+    "@babel/preset-env": "^7.29.2",
+    "@eslint/js": "^10.0.1",
     "cross-env": "^10.1.0",
-    "eslint": "^9.39.1",
-    "eslint-plugin-jest": "^29.2.1",
-    "glob": "^13.0.0",
-    "globals": "^16.5.0",
-    "jest": "^30.2.0",
-    "rimraf": "^6.1.2",
-    "tar": "^7.5.2"
+    "eslint": "^10.2.1",
+    "eslint-plugin-n": "^17.24.0",
+    "globals": "^17.5.0",
+    "tar": "^7.5.13"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22.17"
   }
 }
