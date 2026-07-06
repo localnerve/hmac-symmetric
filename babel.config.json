@@ -3,8 +3,9 @@
     [
       "@babel/preset-env", {
         "targets": {
-          "node": "18"
-        }
+          "node": "20"
+        },
+        "modules": "commonjs"
       }
     ]
   ]
