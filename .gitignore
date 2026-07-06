@@ -18,4 +18,5 @@ dist
 node_modules
 
 coverage
+
 .DS_Store

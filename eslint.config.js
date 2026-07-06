@@ -2,7 +2,17 @@ import js from '@eslint/js';
 import globals from 'globals';
 import nodePlugin from 'eslint-plugin-n';
 
-const nodeRules = nodePlugin.configs['flat/recommended'].rules;
+const nodeRules = {
+  ...nodePlugin.configs['flat/recommended'].rules,
+  ...{
+    "n/no-unsupported-features/node-builtins": [
+      "error",
+      {
+        allowExperimental: true,
+      },
+    ],
+  }
+};
 
 export default [{
   ignores: [
