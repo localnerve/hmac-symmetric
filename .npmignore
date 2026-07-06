@@ -6,3 +6,5 @@ tmp
 *.tgz
 posttranspile.js
 babel.config.json
+.nvmrc
+eslint.config.js
